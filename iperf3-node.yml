@@ -4,6 +4,11 @@ metadata:
   name: iperf3-node
 spec:
   containers:
-  - name: iperf3-node
+  - name: iperf3
     image: engedics/iperf3d:nod
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 5201
+      hostPort: 5204
+      protocol: TCP
   nodeName: node
