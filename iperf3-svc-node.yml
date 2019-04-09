@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: iperf3-svc-node
+spec:
+  type: NodePort
+  ports:
+    - port: 5201
+      nodePort: 30001
+  selector:
+    name: iperf3-node
