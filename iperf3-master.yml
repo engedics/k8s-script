@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: iperf3-master
+  labels:
+    name: iperf3-master
 spec:
   containers:
   - name: iperf3
