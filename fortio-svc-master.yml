@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fortio-svc-master
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+      name: http-fortio
+    - port: 8079
+      nodePort: 30079
+      name: grpc-ping
+  selector:
+    name: fortio-master
