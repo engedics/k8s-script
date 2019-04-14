@@ -11,7 +11,9 @@ spec:
     imagePullPolicy: Always
     ports:
     - containerPort: 8080
+      hostPort: 8081
       name: http-fortio
     - containerPort: 8079
+      hostPort: 8078
       name: grpc-ping
   nodeName: node
