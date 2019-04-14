@@ -6,10 +6,10 @@ spec:
   type: NodePort
   ports:
     - port: 8080
-      nodePort: 30080
+      nodePort: 30180
       name: http-fortio
     - port: 8079
-      nodePort: 30079
+      nodePort: 30179
       name: grpc-ping
   selector:
     name: fortio-node
