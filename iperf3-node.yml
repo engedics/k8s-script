@@ -11,6 +11,6 @@ spec:
     imagePullPolicy: Always
     ports:
     - containerPort: 5201
-      hostPort: 5204
+      hostPort: 5202
       protocol: TCP
   nodeName: node
