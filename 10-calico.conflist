@@ -1,0 +1,24 @@
+{
+  "name": "k8s-pod-network",
+  "cniVersion": "0.3.0",
+  "plugins": [
+	{
+	  "type": "calico",
+	  "log_level": "info",
+	  "datastore_type": "kubernetes",
+	  "nodename": "master",
+	  "mtu": 1500,
+	  "ipam": {
+		  "type": "calico-ipam"
+	  },
+	  "kubernetes": {
+		  "kubeconfig": "/home/master/.kube/config"
+	  }
+	},
+	{
+	  "type": "portmap",
+	  "snat": true,
+	  "capabilities": {"portMappings": true}
+	}
+  ]
+}
