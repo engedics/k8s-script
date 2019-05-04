@@ -595,7 +595,7 @@ spec:
               value: "k8s,bgp"
             # Auto-detect the BGP IP address.
             - name: IP
-              value: "autodetect"
+              value: ""
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "Never"
