@@ -31,9 +31,6 @@ data:
           "ipam": {
               "type": "calico-ipam"
           },
-          "policy": {
-              "type": "k8s"
-          },
           "kubernetes": {
               "kubeconfig": "__KUBECONFIG_FILEPATH__"
           }
