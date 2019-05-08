@@ -227,11 +227,11 @@ do
 	#perform service test between master and node pod
 	echo "===>>> $cni: master <-> node" | tee -a results.txt
 	sleep 2
-	kubectl exec -it iperf3-master -- iperf3 -c $master -p 30001 -J -t 30 > iperf_json/svc_masternode_$cni.json
-	cat iperf_json/svc_masternode_$cni.json | jq '.end.sum_sent.bits_per_second' | tee -a results.txt
-	kubectl exec -it fortio-node -- fortio load -json - -quiet -c 32 -qps 0 -t 30s -r 0.0001 http://$master:30080/echo > fortio_json/svc_masternode_$cni.json 
-	sed -i 1,10d fortio_json/svc_masternode_$cni.json 
-	sed -i '$d' fortio_json/svc_masternode_$cni.json 
+	kubectl exec -it iperf3-master -- iperf3 -c $master -p 30001 -J -t 30 > iperf_json/svc_inter_$cni.json
+	cat iperf_json/svc_inter_$cni.json | jq '.end.sum_sent.bits_per_second' | tee -a results.txt
+	kubectl exec -it fortio-node -- fortio load -json - -quiet -c 32 -qps 0 -t 30s -r 0.0001 http://$master:30080/echo > fortio_json/svc_inter_$cni.json 
+	sed -i 1,10d fortio_json/svc_inter_$cni.json 
+	sed -i '$d' fortio_json/svc_inter_$cni.json 
 
 	#removing pods and services
 	echo "===>>> Removing pods and services"
