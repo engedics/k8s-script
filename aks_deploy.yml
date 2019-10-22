@@ -29,7 +29,7 @@ spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
   ports:
-  - port: 5201
+  - port: 5210
     targetPort: 5201
   selector:
     name: iperf
@@ -67,7 +67,7 @@ spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
   ports:
-  - port: 8080
+  - port: 8008
     targetPort: 8080
   selector:
     name: fortio
