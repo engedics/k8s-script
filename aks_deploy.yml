@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: iperf-ds
+spec:
+  selector:
+      matchLabels:
+        name: iperf
+  template:
+    metadata:
+      labels:
+        name: iperf 
+    spec:
+      containers:
+      - name: iperf
+        image: engedics/iperf3d:nod
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5201
+          protocol: TCP
+      nodeSelector: 
+        noDaemonSet: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf-svc
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 5201
+    targetPort: 5201
+  selector:
+    name: iperf
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fortio-ds
+spec:
+  selector:
+      matchLabels:
+        name: fortio
+  template:
+    metadata:
+      labels:
+        name: fortio 
+    spec:
+      containers:
+      - name: fortio
+        image: fortio/fortio:latest_release
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http-fortio
+        - containerPort: 8079
+          name: grpc-ping
+      nodeSelector: 
+        noDaemonSet: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-svc
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    name: fortio
