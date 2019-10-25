@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: iperf-ds
+spec:
+  selector:
+      matchLabels:
+        name: iperf
+  template:
+    metadata:
+      labels:
+        name: iperf 
+    spec:
+      containers:
+      - name: iperf
+        image: engedics/iperf3d:nod
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5201
+          protocol: TCP
+      nodeSelector: 
+        noDaemonSet: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf-svc-ext
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 5201
+  selector:
+    name: iperf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf-svc-int
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    cloud.google.com/load-balancer-type: "Internal"
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 5201
+  selector:
+    name: iperf
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fortio-ds
+spec:
+  selector:
+      matchLabels:
+        name: fortio
+  template:
+    metadata:
+      labels:
+        name: fortio 
+    spec:
+      containers:
+      - name: fortio
+        image: fortio/fortio:latest_release
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http-fortio
+        - containerPort: 8079
+          name: grpc-ping
+      nodeSelector: 
+        noDaemonSet: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-svc-ext
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 8080
+  selector:
+    name: fortio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-svc-int
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    cloud.google.com/load-balancer-type: "Internal"
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 8080
+  selector:
+    name: fortio
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-pod
+spec:
+  containers:
+  - name: iperf-pod
+    image: engedics/iperf3d:nod
+    imagePullPolicy: Always
+  nodeSelector: 
+    node0: "True"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fortio-pod
+spec:
+  containers:
+  - name: fortio-pod
+    image: fortio/fortio:latest_release
+    imagePullPolicy: Always
+  nodeSelector: 
+    node0: "True"
