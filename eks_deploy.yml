@@ -45,6 +45,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 5202
+    targetPort: 5201
   selector:
     name: iperf
 ---
