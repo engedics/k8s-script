@@ -27,7 +27,6 @@ metadata:
   name: iperf-svc-ext
 spec:
   type: LoadBalancer
-  sessionAffinity: ClientIP
   ports:
   - port: 5201
   selector:
@@ -38,12 +37,9 @@ kind: Service
 metadata:
   name: iperf-svc-int
   annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    cloud.google.com/load-balancer-type: "Internal"
 spec:
   type: LoadBalancer
-  sessionAffinity: ClientIP
   ports:
   - port: 5201
   selector:
@@ -80,7 +76,6 @@ metadata:
   name: fortio-svc-ext
 spec:
   type: LoadBalancer
-  sessionAffinity: ClientIP
   ports:
   - port: 8080
   selector:
@@ -91,12 +86,9 @@ kind: Service
 metadata:
   name: fortio-svc-int
   annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    cloud.google.com/load-balancer-type: "Internal"
 spec:
   type: LoadBalancer
-  sessionAffinity: ClientIP
   ports:
   - port: 8080
   selector:
